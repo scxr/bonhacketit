@@ -1,0 +1,66 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="app">
+  <h1 class="text-center" style="margin: 40px 0px">Create A Recipe</h1>
+  <hr />
+  <div id="form">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        placeholder="my cool recipe"
+        v-model="title"
+        required
+      />
+    </div>
+    <!-- <h3>Image goes here.</h3> -->
+    <h2>Nutrition Facts</h2>
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="calories">Calories (kcal)</label>
+        <input
+          v-model="calories"
+          type="number"
+          class="form-control"
+          id="calories"
+        />
+      </div>
+      <div class="form-group col-md-3">
+        <label for="sugar">Fat (g)</label>
+        <input v-model="fat" type="number" class="form-control" id="sugar" />
+      </div>
+      <div class="form-group col-md-3">
+        <label for="projectName">Sugar (g)</label>
+        <input
+          v-model="sugar"
+          type="number"
+          class="form-control"
+          id="projectName"
+        />
+      </div>
+      <div class="form-group col-md-3">
+        <label for="salt">Salt (g)</label>
+        <input v-model="salt" type="number" class="form-control" id="salt" />
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div
+      v-if="message"
+      class="alert"
+      :class="'alert-' + message.status"
+      role="alert"
+      style="text-align: center"
+    >
+      ${ message.text }
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-block btn-primary" @click="onSubmit()">
+      Create Recipe
+    </button>
+  </div>
+</div>
+<script src="/static/vue/create_recipe.js"></script>
+{% endblock content %}

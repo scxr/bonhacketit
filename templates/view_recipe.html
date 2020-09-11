@@ -1,9 +1,4 @@
-Calories: {{ calories }}
-Created_by : {{ created_by }}
-date_created : {{ date_created }}
-fat : {{ fat }}
-salt: {{salt}}
-sugar: {{ sugar }}
-vegetarian: {{vegetarian}}
-likes: {{likes}}
-dislikes: {{dislikes}}
+{% extends 'layout.html' %} {% block content %}
+<div id="app"></div>
+<script src="/static/vue/view_recipe.js"></script>
+{% endblock content %}
