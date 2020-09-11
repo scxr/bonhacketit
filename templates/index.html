@@ -1,1 +1,6 @@
-<h1> Hello world</h1>
+{% extends 'layout.html' %} {% block content %}
+<div id="app">
+  <h1>${msg}</h1>
+</div>
+<script src="/static/vue/hello.js"></script>
+{% endblock content %}
