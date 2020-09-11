@@ -5,14 +5,18 @@ from db.functions import get_db
 from models.db_models import Recipe
 from models.request_models import Recipe_model
 from sqlalchemy.orm import Session
+import json
 from random import randint
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 @router.post('/create_recipe')
-async def create_recipe(recipe: Recipe_model, db : Session = Depends(get_db)):
+async def create_recipe(recipe: Recipe_model, request: Request):
+    db = SessionLocal()
+    
+    username = str(request.cookies).split("username")[1].split("'")[2] # do not fucking judge me
     new_recipe = Recipe()
-    new_recipe.created_by = recipe.created_by
+    new_recipe.created_by = username
     new_recipe.calories = recipe.calories
     new_recipe.fat = recipe.fat
     new_recipe.sugar = recipe.sugar
@@ -25,6 +29,7 @@ async def create_recipe(recipe: Recipe_model, db : Session = Depends(get_db)):
     db.add(new_recipe)
     db.commit()
     return {"rid":rid}
+    
 
 @router.get('/create_recipe')
 async def create_recipe_get(request: Request):

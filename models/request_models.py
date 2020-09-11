@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 
 class Recipe_model(BaseModel):
-    created_by: str
     title: str
     calories: int
     fat: float = 0.0

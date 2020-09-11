@@ -26,9 +26,9 @@ async def register(user: User_model, db: Session = Depends(get_db)):
 @router.post("/login")
 async def login(user:User_model, db: Session = Depends(get_db)):
     user_vals = db.query(User).filter(User.username==user.username).first()
-    if user_vals:
+    if user_vals is None:
         return {"error":"invalid username"}
-    if bcrypt.checkpw(user.password.encode(), user_vals.hashed_password):
+    if bcrypt.checkpw(user.password.encode(), user_vals.hashed_pword):
         content = {"okay":"signed in"}
         response = JSONResponse(content=content)
         response.set_cookie(key="username", value=user.username)
@@ -36,8 +36,10 @@ async def login(user:User_model, db: Session = Depends(get_db)):
     else:
         return {"error":"incorrect password"}
 
+@router.get("/test")
+async def testing(username: str = Cookie(None)):
+    return {"username":username}
 
-'''
 @router.get('/cookie_tester')
 async def test_cookie(request: Request):
     return templates.TemplateResponse("tst.html", {"request":request})
@@ -48,4 +50,3 @@ async def create_cookie():
     response = JSONResponse(content=content)
     response.set_cookie(key="username", value="cswil")
     return response
-'''
