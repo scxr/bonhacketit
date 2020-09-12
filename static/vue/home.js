@@ -24,6 +24,7 @@ let app = new Vue({
 
       const data = await response.json();
       this.recipes = data;
+      console.log(data);
     },
     async filterRecipes() {
       const response = await fetch("/filter_recipes", {
@@ -40,7 +41,6 @@ let app = new Vue({
       });
       const data = await response.json();
       this.recipes = data;
-      console.log(data);
     },
     async onChange() {
       this.filterRecipes();
@@ -53,6 +53,9 @@ let app = new Vue({
         salt: 0,
       };
       this.getRecipes();
+    },
+    viewRecipe(rid) {
+      location.replace(`/view_recipe/${rid}`);
     },
   },
 });

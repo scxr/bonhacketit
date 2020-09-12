@@ -37,7 +37,7 @@ async def create_recipe(file: UploadFile = File(...), data: str = Form(...), req
     rid = randint(1111111111,9999999999)
     file_extension= str(file.filename).split('.')[1]
     to_save = f"{rid}.{file_extension}"
-    new_recipe.image_path = f"images/{to_save}"
+    new_recipe.image_path = f"{settings.UPLOAD_FOLDER}{to_save}"
     new_recipe.rid = rid
     db.add(new_recipe)
     db.commit()

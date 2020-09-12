@@ -48,8 +48,39 @@
     <hr />
     <div class="recipes">
       <div class="col" v-for="recipe in recipes">
+        <div class="card">
+          <div class="card-image">
+            <img width="200" height="500" :src="recipe.image_path" />
+            <span class="card-title">Title: ${recipe.title}</span>
+          </div>
+          <div class="card-content">
+            <hr />
+            <h5>Nutrition Facts</h5>
+            <p>Calories: ${ recipe.calories } kcal</p>
+            <p>Fat: ${ recipe.fat } g</p>
+            <p>Sugar: ${ recipe.sugar } g</p>
+            <p>Salt: ${ recipe.salt } g</p>
+            <p>Vegetarian: ${ recipe.vegetarian }</p>
+            <hr />
+            <p>
+              <i class="material-icons tiny">thumb_up</i> ${ recipe.likes }
+              <i class="material-icons tiny">thumb_down</i>${ recipe.dislikes }
+            </p>
+            <hr />
+            <p>Created By: ${ recipe.created_by }</p>
+            <p>${ recipe.date_created } days ago</p>
+          </div>
+          <div class="card-action">
+            <a :href="'/view_recipe/'+recipe.rid">View Recipe</a>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col" v-for="recipe in recipes">
         <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
+          <div
+            class="card-content white-text row-link"
+            @click="viewRecipe(recipe.rid)"
+          >
             <span class="card-title">Title: ${ recipe.title }</span>
             <hr />
             <h5>Nutrition Facts</h5>
@@ -67,12 +98,8 @@
             <p>Created By: ${ recipe.created_by }</p>
             <p>${ recipe.date_created } days ago</p>
           </div>
-          <!-- <div class="card-action">
-                  <a href="#">This is a link</a>
-                  <a href="#">This is a link</a>
-                </div> -->
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
