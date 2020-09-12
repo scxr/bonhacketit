@@ -31,6 +31,13 @@ async def register(user: User_model, db: Session = Depends(get_db)):
     return {"ok": "user created"}
 
 
+@router.get("/logout")
+async def logout(request: Request):
+    data = {"ok":"user logged out"}
+    response = JSONResponse(content=data)
+    response.set_cookie(key="username", value="")
+    return response
+
 @router.get("/login")
 async def login_get(request: Request):
     return templates.TemplateResponse("auth/login.html", {"request": request})

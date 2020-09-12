@@ -48,7 +48,7 @@ let app = new Vue({
         })
       );
 
-      const response = await fetch("/filetest", {
+      const response = await fetch("/create_recipe", {
         method: "POST",
         body: formData,
       });

@@ -9,38 +9,46 @@ from models.request_models import Recipe_model
 from sqlalchemy.orm import Session
 import json
 from random import randint
+from config import settings
 
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 @router.post('/create_recipe')
-async def create_recipe(recipe: Recipe_model, request: Request):
+async def create_recipe(file: UploadFile = File(...), data: str = Form(...), request: Request = ""):
     db = SessionLocal()
-    
+    data = json.loads(data)
     username = str(request.cookies).split("username")[1].split("'")[2] # do not fucking judge me
     new_recipe = Recipe()
     new_recipe.created_by = username
-    new_recipe.calories = recipe.calories
-    new_recipe.fat = recipe.fat
-    new_recipe.sugar = recipe.sugar
-    new_recipe.salt = recipe.salt
-    new_recipe.vegetarian = recipe.vegetarian
+    new_recipe.calories = data["calories"]
+    new_recipe.fat = data["fat"]
+    new_recipe.sugar = data["sugar"]
+    new_recipe.salt = data["salt"]
+    new_recipe.vegetarian = data["vegetarian"]
     new_recipe.likes = 0
     new_recipe.dislikes = 0
     rid = randint(1111111111,9999999999)
     new_recipe.rid = rid
     db.add(new_recipe)
     db.commit()
+    upload_folder = settings.UPLOAD_FOLDER
+    file_obj = file.file
+    upload_folder = open(os.path.join(upload_folder, file.filename), 'wb+')
+    shutil.copyfileobj(file_obj, upload_folder)
+    upload_folder.close()
     return {"rid":rid}
-
+    
 
 @router.post("/filetest")
 def create_file(file: UploadFile = File(...), data: str = Form(...)):
     print(file)
+    print(dir(data))
     data = json.loads(data)
+    
     print(data["title"])
-    upload_folder = ""
+    upload_folder = settings.UPLOAD_FOLDER
     file_object = file.file
     #create empty file to copy the file_object to
     upload_folder = open(os.path.join(upload_folder, file.filename), 'wb+')

@@ -10,6 +10,10 @@ from random import randint
 
 router = APIRouter()
 
+@router.post('/file_test')
+async def file_test(request: Request):
+    print(dir(request))
+
 @router.post("/all_recipes")
 async def view_all_recipes(db: Session = Depends(get_db)):
     all_vals = db.query(Recipe).all()
