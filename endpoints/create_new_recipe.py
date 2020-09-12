@@ -54,16 +54,21 @@ async def create_recipe(file: UploadFile = File(...), data: str = Form(...), req
 async def create_recipe_get(request: Request):
     return templates.TemplateResponse("create_recipe.html",{"request":request})
 
+
 @router.get('/view_recipe/{rid}')
 async def view_recipe(rid: int, request: Request):
     db = SessionLocal()
     vals = db.query(Recipe).filter(Recipe.rid==rid).first()
     # 'calories', 'created_by', 'date_created', 'dislikes',  'fat', 'id', 'likes', 'metadata', 'rid', 'salt', 'sugar', 'vegetarian'
     diff = datetime.utcnow() - vals.date_created
+    print(vals.image_path.split('/')[1])
+
     return templates.TemplateResponse("view_recipe.html",{"request":request,
+                                                          "title":vals.title,
                                                           "calories":vals.calories,
                                                           "created_by": vals.created_by,
                                                           "date_created":diff.days,
+                                                          "image_path":vals.image_path.split('/')[2],
                                                           "fat":vals.fat,
                                                           "salt":vals.salt,
                                                           "sugar":vals.sugar,
