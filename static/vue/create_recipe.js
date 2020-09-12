@@ -11,6 +11,7 @@ let app = new Vue({
     sugar: 0,
     salt: 0,
     vegetarian: 0,
+    img_file: null,
   },
   methods: {
     async onSubmit() {
@@ -22,22 +23,39 @@ let app = new Vue({
         return;
       }
 
-      const response = await fetch("/create_recipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      if (!this.img_file) {
+        this.message = {
+          status: "warning",
+          text: "Please select an image",
+        };
+        return;
+      }
+
+      let formData = new FormData();
+
+      formData.append("file", this.img_file);
+      formData.append(
+        "data",
+        JSON.stringify({
           title: this.title,
           calories: parseInt(this.calories),
           fat: parseInt(this.fat),
           sugar: parseInt(this.sugar),
           salt: parseInt(this.salt),
           vegetarian: this.vegetarian,
-        }),
+        })
+      );
+
+      const response = await fetch("/file_test", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: formData,
       });
 
       const data = await response.json();
+      console.log(data);
 
       if (data.error) {
         this.message = {

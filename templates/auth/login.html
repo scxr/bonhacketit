@@ -1,0 +1,95 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="app">
+  <div class="row">
+    <form class="col s12" @submit.prevent="login">
+      <fieldset class="form-group">
+        <h2 class="mb-4" style="text-align: center">Login</h2>
+      </fieldset>
+      <div class="row">
+        <div class="input-field col s12">
+          <input
+            v-model="username"
+            id="username"
+            type="text"
+            class="validate"
+          />
+          <label for="username">Username</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input
+            v-model="password"
+            id="password"
+            type="password"
+            class="validate"
+          />
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div
+          v-if="message"
+          class="alert"
+          :class="'alert-' + message.status"
+          role="alert"
+          style="text-align: center"
+        >
+          ${ message.text }
+        </div>
+      </div>
+      <button class="btn btn-success btn-block light-blue" type="submit">
+        Login
+      </button>
+    </form>
+  </div>
+</div>
+<script src="/static/vue/auth/login.js"></script>
+{% endblock content %}
+<!-- 
+<div id="app" class="center-screen">
+  <div id="form">
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">Login</legend>
+      <div class="form-group">
+        <input
+          v-model="username"
+          class="login-inputs"
+          type="text"
+          placeholder="Username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          v-model="password"
+          class="login-inputs"
+          type="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <div
+          v-if="message"
+          class="alert"
+          :class="'alert-' + message.status"
+          role="alert"
+          style="text-align: center"
+        >
+          ${ message.text }
+        </div>
+      </div>
+      <div class="form-group">
+        <button
+          @click="login()"
+          class="btn btn-success btn-block"
+          type="submit"
+        >
+          Login
+        </button>
+      </div>
+    </fieldset>
+  </div>
+</div>
+<script src="/static/vue/auth/login.js"></script> -->

@@ -2,7 +2,7 @@
 <div id="app">
   <h1 class="text-center" style="margin: 40px 0px">Create A Recipe</h1>
   <hr />
-  <div id="form">
+  <form @submit.prevent="onSubmit">
     <div class="form-group">
       <label for="title">Title</label>
       <input
@@ -12,6 +12,15 @@
         placeholder="my cool recipe"
         v-model="title"
         required
+      />
+    </div>
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input
+        v-model="img_file"
+        type="file"
+        class="form-control-file"
+        id="image"
       />
     </div>
     <!-- <h3>Image goes here.</h3> -->
@@ -44,23 +53,23 @@
         <input v-model="salt" type="number" class="form-control" id="salt" />
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <div
-      v-if="message"
-      class="alert"
-      :class="'alert-' + message.status"
-      role="alert"
-      style="text-align: center"
-    >
-      ${ message.text }
+    <div class="form-group">
+      <div
+        v-if="message"
+        class="alert"
+        :class="'alert-' + message.status"
+        role="alert"
+        style="text-align: center"
+      >
+        ${ message.text }
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-block btn-primary" @click="onSubmit()">
-      Create Recipe
-    </button>
-  </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-block btn-primary">
+        Create Recipe
+      </button>
+    </div>
+  </form>
 </div>
 <script src="/static/vue/create_recipe.js"></script>
 {% endblock content %}

@@ -29,6 +29,15 @@ async def create_recipe(recipe: Recipe_model, request: Request):
     db.add(new_recipe)
     db.commit()
     return {"rid":rid}
+
+
+@router.post('/file_test')
+async def file_test(request: Request):
+    print("hi")
+    print(dir(request.body))
+    print(dir(request.json))
+    return {"msh": "hi"}
+
     
 
 @router.get('/create_recipe')
