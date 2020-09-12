@@ -1,3 +1,83 @@
 {% extends 'layout.html' %} {% block content %}
-<div id="app"></div>
+<div id="app">
+  <div>
+    <h2>Filter</h2>
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="calories">Calories (kcal)</label>
+        <input
+          v-model="filter.calories"
+          @input="onChange"
+          type="number"
+          class="form-control"
+          id="calories"
+        />
+      </div>
+      <div class="form-group col-md-3">
+        <label for="sugar">Fat (g)</label>
+        <input
+          v-model="filter.fat"
+          @input="onChange"
+          type="number"
+          class="form-control"
+          id="sugar"
+        />
+      </div>
+      <div class="form-group col-md-3">
+        <label for="projectName">Sugar (g)</label>
+        <input
+          v-model="filter.sugar"
+          @input="onChange"
+          type="number"
+          class="form-control"
+          id="projectName"
+        />
+      </div>
+      <div class="form-group col-md-3">
+        <label for="salt">Salt (g)</label>
+        <input
+          v-model="filter.salt"
+          @input="onChange"
+          type="number"
+          class="form-control"
+          id="salt"
+        />
+      </div>
+    </div>
+    <button class="btn btn-primary" @click="resetFilters">Reset Filters</button>
+    <hr />
+    <div class="recipes">
+      <div class="row">
+        <div class="col" v-for="recipe in recipes">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Title: ${ recipe.title }</span>
+              <hr />
+              <h5>Nutrition Facts</h5>
+              <p>Calories: ${ recipe.calories } kcal</p>
+              <p>Fat: ${ recipe.fat } g</p>
+              <p>Sugar: ${ recipe.sugar } g</p>
+              <p>Salt: ${ recipe.salt } g</p>
+              <p>Vegetarian: ${ recipe.vegetarian }</p>
+              <hr />
+              <p>
+                <i class="material-icons tiny">thumb_up</i> ${ recipe.likes }
+                <i class="material-icons tiny">thumb_down</i>${ recipe.dislikes
+                }
+              </p>
+              <hr />
+              <p>Created By: ${ recipe.created_by }</p>
+              <p>${ recipe.date_created } days ago</p>
+            </div>
+            <!-- <div class="card-action">
+                  <a href="#">This is a link</a>
+                  <a href="#">This is a link</a>
+                </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/vue/home.js"></script>
 {% endblock content %}

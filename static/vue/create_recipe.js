@@ -10,8 +10,14 @@ let app = new Vue({
     fat: 0,
     sugar: 0,
     salt: 0,
-    vegetarian: 0,
+    vegetarian: false,
     img_file: null,
+  },
+  created() {
+    // redirect if user already logged in
+    if (!getUsername()) {
+      location.replace("/");
+    }
   },
   methods: {
     async onSubmit() {
@@ -45,6 +51,7 @@ let app = new Vue({
           sugar: parseInt(this.sugar),
           salt: parseInt(this.salt),
           vegetarian: this.vegetarian,
+          username: getUsername(),
         })
       );
 
@@ -63,7 +70,7 @@ let app = new Vue({
         };
       } else {
         // redirect to home page
-        // location.href = "/";
+        location.replace("/");
         this.message = {
           status: "success",
           text: "successfully created recipe",

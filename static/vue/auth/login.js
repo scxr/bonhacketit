@@ -8,6 +8,12 @@ let app = new Vue({
     username: "",
     password: "",
   },
+  created() {
+    // redirect if user already logged in
+    if (getUsername()) {
+      location.replace("/");
+    }
+  },
   methods: {
     async login() {
       if (!this.username && !this.password) {

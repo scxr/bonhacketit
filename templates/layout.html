@@ -11,12 +11,16 @@
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="/static/css/styles.css" />
     <!-- Compiled and minified CSS -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
-    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <!-- production vue cdn -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
     <!-- dev vue cdn -->
@@ -28,11 +32,13 @@
     <div class="container">
       <div id="home">
         <nav>
-          <div class="nav-wrapper">
+          <div class="nav-wrapper green">
             <ul id="nav-mobile" class="left hide-on-med-and-down">
               <li><a href="/">Logo</a></li>
               <li><a href="/">Home</a></li>
-              <li><a href="/create_recipe">Components</a></li>
+              <li v-if="username">
+                <a href="/create_recipe">Create Recipe</a>
+              </li>
             </ul>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               <div v-if="!username">
@@ -40,6 +46,7 @@
                 <li><a href="/register">Register</a></li>
               </div>
               <div v-else>
+                <li><a href="/">${ username }</a></li>
                 <li><a @click="logout">Logout</a></li>
               </div>
               <!-- <li><a href="collapsible.html">JavaScript</a></li> -->
@@ -68,6 +75,6 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <script src="/static/vue/home.js"></script>
+    <script src="/static/vue/layout.js"></script>
   </body>
 </html>

@@ -11,3 +11,8 @@
   width: 400px;
   height: 35px;
 }
+
+a:hover {
+  text-decoration: none;
+  color: white;
+}

@@ -21,7 +21,8 @@ async def create_recipe(file: UploadFile = File(...), data: str = Form(...), req
     
     db = SessionLocal()
     data = json.loads(data)
-    username = str(request.cookies).split("username")[1].split("'")[2] # do not fucking judge me
+    # username = str(request.cookies).split("username")[1].split("'")[2] # do not fucking judge me
+    username = data["username"]
     new_recipe = Recipe()
     new_recipe.created_by = username
     new_recipe.title = data["title"]

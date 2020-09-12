@@ -1,17 +1,58 @@
-// create_recipe.html
+// index.html
 
-let home = new Vue({
+let app = new Vue({
   delimiters: ["${", "}"],
-  el: "#home",
+  el: "#app",
   data: {
-    username: null,
+    recipes: [],
+    filter: {
+      calories: 0,
+      fat: 0,
+      sugar: 0,
+      salt: 0,
+    },
   },
   created() {
-    this.username = getUsername();
+    // get all recipes
+    this.getRecipes();
   },
   methods: {
-    logout() {
-      document.cookie = "username= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    async getRecipes() {
+      const response = await fetch("/all_recipes", {
+        method: "POST",
+      });
+
+      const data = await response.json();
+      this.recipes = data;
+    },
+    async filterRecipes() {
+      const response = await fetch("/filter_recipes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          calories: parseInt(this.filter.calories),
+          fat: parseInt(this.filter.fat),
+          sugar: parseInt(this.filter.sugar),
+          salt: parseInt(this.filter.salt),
+        }),
+      });
+      const data = await response.json();
+      this.recipes = data;
+      console.log(data);
+    },
+    async onChange() {
+      this.filterRecipes();
+    },
+    resetFilters() {
+      this.filter = {
+        calories: 0,
+        fat: 0,
+        sugar: 0,
+        salt: 0,
+      };
+      this.getRecipes();
     },
   },
 });
