@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, Request
+import os
+import shutil
+from fastapi import APIRouter, Depends, Request, UploadFile, File, Form
 from fastapi.templating import Jinja2Templates
 from db.base import SessionLocal, engine
 from db.functions import get_db
@@ -7,6 +9,8 @@ from models.request_models import Recipe_model
 from sqlalchemy.orm import Session
 import json
 from random import randint
+
+
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
@@ -31,14 +35,19 @@ async def create_recipe(recipe: Recipe_model, request: Request):
     return {"rid":rid}
 
 
-@router.post('/file_test')
-async def file_test(request: Request):
-    print("hi")
-    print(dir(request.body))
-    print(dir(request.json))
-    return {"msh": "hi"}
+@router.post("/filetest")
+def create_file(file: UploadFile = File(...), data: str = Form(...)):
+    print(file)
+    data = json.loads(data)
+    print(data["title"])
+    upload_folder = ""
+    file_object = file.file
+    #create empty file to copy the file_object to
+    upload_folder = open(os.path.join(upload_folder, file.filename), 'wb+')
+    shutil.copyfileobj(file_object, upload_folder)
+    upload_folder.close()
+    return {"filename": file.filename}
 
-    
 
 @router.get('/create_recipe')
 async def create_recipe_get(request: Request):

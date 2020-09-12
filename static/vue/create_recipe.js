@@ -33,7 +33,9 @@ let app = new Vue({
 
       let formData = new FormData();
 
+      // add file
       formData.append("file", this.img_file);
+      // add json data
       formData.append(
         "data",
         JSON.stringify({
@@ -46,11 +48,8 @@ let app = new Vue({
         })
       );
 
-      const response = await fetch("/file_test", {
+      const response = await fetch("/filetest", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: formData,
       });
 
@@ -67,9 +66,14 @@ let app = new Vue({
         // location.href = "/";
         this.message = {
           status: "success",
-          text: "successfully  project",
+          text: "successfully created recipe",
         };
       }
+    },
+
+    selectFile(event) {
+      console.log(event.target.files);
+      this.img_file = event.target.files[0];
     },
   },
 });

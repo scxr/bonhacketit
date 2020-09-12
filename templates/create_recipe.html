@@ -2,7 +2,7 @@
 <div id="app">
   <h1 class="text-center" style="margin: 40px 0px">Create A Recipe</h1>
   <hr />
-  <form @submit.prevent="onSubmit">
+  <form @submit.prevent="onSubmit" enctype="multipart/form-data">
     <div class="form-group">
       <label for="title">Title</label>
       <input
@@ -17,7 +17,7 @@
     <div class="form-group">
       <label for="image">Image</label>
       <input
-        v-model="img_file"
+        @change="selectFile"
         type="file"
         class="form-control-file"
         id="image"
