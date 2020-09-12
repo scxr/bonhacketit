@@ -17,23 +17,26 @@ async def file_test(request: Request):
 
 @router.post("/all_recipes")
 async def view_all_recipes(db: Session = Depends(get_db)):
+    cnt = 0
     all_vals = db.query(Recipe).all()
     data = {}
-    for i in range(0, len(all_vals)):
+    for i in range(len(all_vals) -1, 0, -1):
+        cnt+=1
         vals = all_vals[i]
         days_ago = datetime.utcnow() - vals.date_created 
-        data[i] = {}
-        data[i]["rid"] = vals.rid
-        data[i]["created_by"] = vals.created_by
-        data[i]["title"] = vals.title
-        data[i]["date_created"] = days_ago.days
-        data[i]["calories"] = vals.calories
-        data[i]["fat"] = vals.fat
-        data[i]["sugar"] = vals.sugar
-        data[i]["vegetarian"] = vals.vegetarian
-        data[i]["image_path"] = vals.image_path
-        data[i]["likes"] = vals.likes
-        data[i]["dislikes"] = vals.dislikes
+        data[cnt] = {}
+        data[cnt]["rid"] = vals.rid
+        data[cnt]["created_by"] = vals.created_by
+        data[cnt]["title"] = vals.title
+        data[cnt]["date_created"] = days_ago.days
+        data[cnt]["calories"] = vals.calories
+        data[cnt]["fat"] = vals.fat
+        data[cnt]["sugar"] = vals.sugar
+        data[cnt]["salt"] = vals.salt
+        data[cnt]["vegetarian"] = vals.vegetarian
+        data[cnt]["image_path"] = vals.image_path
+        data[cnt]["likes"] = vals.likes
+        data[cnt]["dislikes"] = vals.dislikes
     return data
 
 @router.post("/filter_recipes")

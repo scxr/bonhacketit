@@ -23,6 +23,7 @@ async def create_recipe(file: UploadFile = File(...), data: str = Form(...), req
     data = json.loads(data)
     # username = str(request.cookies).split("username")[1].split("'")[2] # do not fucking judge me
     username = data["username"]
+    
     new_recipe = Recipe()
     new_recipe.created_by = username
     new_recipe.title = data["title"]
@@ -33,14 +34,16 @@ async def create_recipe(file: UploadFile = File(...), data: str = Form(...), req
     new_recipe.vegetarian = data["vegetarian"]
     new_recipe.likes = 0
     new_recipe.dislikes = 0
-    new_recipe.image_path = f'images/{data["title"]}'
     rid = randint(1111111111,9999999999)
+    file_extension= str(file.filename).split('.')[1]
+    to_save = f"{rid}.{file_extension}"
+    new_recipe.image_path = f"images/{to_save}"
     new_recipe.rid = rid
     db.add(new_recipe)
     db.commit()
     upload_folder = settings.UPLOAD_FOLDER
     file_obj = file.file
-    upload_folder = open(os.path.join(upload_folder, file.filename), 'wb+')
+    upload_folder = open(os.path.join(upload_folder, to_save), 'wb+')
     shutil.copyfileobj(file_obj, upload_folder)
     upload_folder.close()
     return {"rid":rid}
