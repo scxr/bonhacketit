@@ -47,33 +47,30 @@
     <button class="btn btn-primary" @click="resetFilters">Reset Filters</button>
     <hr />
     <div class="recipes">
-      <div class="row">
-        <div class="col" v-for="recipe in recipes">
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">Title: ${ recipe.title }</span>
-              <hr />
-              <h5>Nutrition Facts</h5>
-              <p>Calories: ${ recipe.calories } kcal</p>
-              <p>Fat: ${ recipe.fat } g</p>
-              <p>Sugar: ${ recipe.sugar } g</p>
-              <p>Salt: ${ recipe.salt } g</p>
-              <p>Vegetarian: ${ recipe.vegetarian }</p>
-              <hr />
-              <p>
-                <i class="material-icons tiny">thumb_up</i> ${ recipe.likes }
-                <i class="material-icons tiny">thumb_down</i>${ recipe.dislikes
-                }
-              </p>
-              <hr />
-              <p>Created By: ${ recipe.created_by }</p>
-              <p>${ recipe.date_created } days ago</p>
-            </div>
-            <!-- <div class="card-action">
+      <div class="col" v-for="recipe in recipes">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">Title: ${ recipe.title }</span>
+            <hr />
+            <h5>Nutrition Facts</h5>
+            <p>Calories: ${ recipe.calories } kcal</p>
+            <p>Fat: ${ recipe.fat } g</p>
+            <p>Sugar: ${ recipe.sugar } g</p>
+            <p>Salt: ${ recipe.salt } g</p>
+            <p>Vegetarian: ${ recipe.vegetarian }</p>
+            <hr />
+            <p>
+              <i class="material-icons tiny">thumb_up</i> ${ recipe.likes }
+              <i class="material-icons tiny">thumb_down</i>${ recipe.dislikes }
+            </p>
+            <hr />
+            <p>Created By: ${ recipe.created_by }</p>
+            <p>${ recipe.date_created } days ago</p>
+          </div>
+          <!-- <div class="card-action">
                   <a href="#">This is a link</a>
                   <a href="#">This is a link</a>
                 </div> -->
-          </div>
         </div>
       </div>
     </div>
