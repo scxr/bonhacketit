@@ -6,6 +6,7 @@ from models.db_models import Recipe
 from models.request_models import Recipe_model
 from sqlalchemy.orm import Session
 import json
+from datetime import datetime
 from random import randint
 
 router = APIRouter()
@@ -20,15 +21,17 @@ async def view_all_recipes(db: Session = Depends(get_db)):
     data = {}
     for i in range(0, len(all_vals)):
         vals = all_vals[i]
+        days_ago = datetime.utcnow() - vals.date_created 
         data[i] = {}
         data[i]["rid"] = vals.rid
         data[i]["created_by"] = vals.created_by
         data[i]["title"] = vals.title
-        data[i]["date_created"] = vals.date_created
+        data[i]["date_created"] = days_ago.days
         data[i]["calories"] = vals.calories
         data[i]["fat"] = vals.fat
         data[i]["sugar"] = vals.sugar
         data[i]["vegetarian"] = vals.vegetarian
+        data[i]["image_path"] = vals.image_path
         data[i]["likes"] = vals.likes
         data[i]["dislikes"] = vals.dislikes
     return data
@@ -39,6 +42,7 @@ async def filter_recipes(request: Request):
     Expected params:
     Calories, Fat, Sugar, Salt
     '''
+    print()
     db = SessionLocal()
     data_sent = await request.json()
     calories = data_sent["calories"]
@@ -51,17 +55,18 @@ async def filter_recipes(request: Request):
         passes = True
         vals = recipes[i]
         if vals.fat <= fat and vals.sugar <= sugar and vals.salt:
-                data[i] = {}
-                data[i]["rid"] = vals.rid
-                data[i]["created_by"] = vals.created_by
-                data[i]["title"] = vals.title
-                data[i]["date_created"] = vals.date_created
-                data[i]["calories"] = vals.calories
-                data[i]["fat"] = vals.fat
-                data[i]["sugar"] = vals.sugar
-                data[i]["vegetarian"] = vals.vegetarian
-                data[i]["likes"] = vals.likes
-                data[i]["dislikes"] = vals.dislikes
+            diff = datetime.utcnow() - vals.date_created
+            data[i] = {}
+            data[i]["rid"] = vals.rid
+            data[i]["created_by"] = vals.created_by
+            data[i]["title"] = vals.title
+            data[i]["date_created"] = diff.days
+            data[i]["calories"] = vals.calories
+            data[i]["fat"] = vals.fat
+            data[i]["sugar"] = vals.sugar
+            data[i]["vegetarian"] = vals.vegetarian
+            data[i]["likes"] = vals.likes
+            data[i]["dislikes"] = vals.dislikes
     return data
 
 '''

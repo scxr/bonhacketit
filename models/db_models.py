@@ -16,6 +16,7 @@ class Recipe(Base):
     sugar = Column(Float, default=0.0)
     salt = Column(Float, default=0.0)
     vegetarian = Column(Boolean)
+    image_path = Column(String)
     likes = Column(Integer, default=0)
     dislikes = Column(Integer, default=0)
 
