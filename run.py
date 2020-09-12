@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from endpoints import create_new_recipe, auth_router
+from endpoints import create_new_recipe, auth_router, recipe_interact_router
 from db.base import engine
 from models import db_models
 
@@ -19,5 +19,11 @@ app.include_router(
     auth_router.router,
     responses={404: {"description": "not found"}}
 )
+
+app.include_router(
+    recipe_interact_router.router,
+    responses={404: {"description": "not found"}}
+)
+
 
 uvicorn.run(app)
