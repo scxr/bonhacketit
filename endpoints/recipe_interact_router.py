@@ -45,6 +45,7 @@ async def filter_recipes(request: Request):
     Expected params:
     Calories, Fat, Sugar, Salt
     '''
+    cnt = 0
     print()
     db = SessionLocal()
     data_sent = await request.json()
@@ -54,22 +55,24 @@ async def filter_recipes(request: Request):
     salt = data_sent["salt"]
     recipes = db.query(Recipe).filter(Recipe.calories<=calories).all()
     data = {}
-    for i in range(0, len(recipes)):
+    for i in range(len(recipes) - 1, 0, -1):
+        cnt += 1
         passes = True
         vals = recipes[i]
         if vals.fat <= fat and vals.sugar <= sugar and vals.salt:
             diff = datetime.utcnow() - vals.date_created
-            data[i] = {}
-            data[i]["rid"] = vals.rid
-            data[i]["created_by"] = vals.created_by
-            data[i]["title"] = vals.title
-            data[i]["date_created"] = diff.days
-            data[i]["calories"] = vals.calories
-            data[i]["fat"] = vals.fat
-            data[i]["sugar"] = vals.sugar
-            data[i]["vegetarian"] = vals.vegetarian
-            data[i]["likes"] = vals.likes
-            data[i]["dislikes"] = vals.dislikes
+            data[cnt] = {}
+            data[cnt]["rid"] = vals.rid
+            data[cnt]["created_by"] = vals.created_by
+            data[cnt]["title"] = vals.title
+            data[cnt]["image_path"] = vals.image_path
+            data[cnt]["date_created"] = diff.days
+            data[cnt]["calories"] = vals.calories
+            data[cnt]["fat"] = vals.fat
+            data[cnt]["sugar"] = vals.sugar
+            data[cnt]["vegetarian"] = vals.vegetarian
+            data[cnt]["likes"] = vals.likes
+            data[cnt]["dislikes"] = vals.dislikes
     return data
 
 '''
