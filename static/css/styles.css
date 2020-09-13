@@ -20,3 +20,7 @@ a:hover {
 .row-link:hover {
   cursor: pointer;
 }
+
+.recipe {
+  width: 50%;
+}

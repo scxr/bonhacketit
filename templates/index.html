@@ -47,31 +47,34 @@
     <button class="btn btn-primary" @click="resetFilters">Reset Filters</button>
     <hr />
     <div class="recipes">
-      <div class="col" v-for="recipe in recipes">
-        <div class="card">
-          <div class="card-image">
-            <img width="200" height="500" :src="recipe.image_path" />
-            <span class="card-title">Title: ${recipe.title}</span>
-          </div>
-          <div class="card-content">
-            <hr />
-            <h5>Nutrition Facts</h5>
-            <p>Calories: ${ recipe.calories } kcal</p>
-            <p>Fat: ${ recipe.fat } g</p>
-            <p>Sugar: ${ recipe.sugar } g</p>
-            <p>Salt: ${ recipe.salt } g</p>
-            <p>Vegetarian: ${ recipe.vegetarian }</p>
-            <hr />
-            <p>
-              <i class="material-icons tiny">thumb_up</i> ${ recipe.likes }
-              <i class="material-icons tiny">thumb_down</i>${ recipe.dislikes }
-            </p>
-            <hr />
-            <p>Created By: ${ recipe.created_by }</p>
-            <p>${ recipe.date_created } days ago</p>
-          </div>
-          <div class="card-action">
-            <a :href="'/view_recipe/'+recipe.rid">View Recipe</a>
+      <div class="row">
+        <div class="col-md-4" v-for="recipe in recipes">
+          <div class="card">
+            <div class="card-image">
+              <img width="300" height="300" :src="recipe.image_path" />
+              <span class="card-title">Title: ${recipe.title}</span>
+            </div>
+            <div class="card-content">
+              <hr />
+              <h5>Nutrition Facts</h5>
+              <p>Calories: ${ recipe.calories } kcal</p>
+              <p>Fat: ${ recipe.fat } g</p>
+              <p>Sugar: ${ recipe.sugar } g</p>
+              <p>Salt: ${ recipe.salt } g</p>
+              <p>Vegetarian: ${ recipe.vegetarian }</p>
+              <hr />
+              <p>
+                <i class="material-icons tiny">thumb_up</i> ${ recipe.likes }
+                <i class="material-icons tiny">thumb_down</i>${ recipe.dislikes
+                }
+              </p>
+              <hr />
+              <p>Created By: ${ recipe.created_by }</p>
+              <p>${ recipe.date_created } days ago</p>
+            </div>
+            <div class="card-action">
+              <a :href="'/view_recipe/'+recipe.rid">View Recipe</a>
+            </div>
           </div>
         </div>
       </div>

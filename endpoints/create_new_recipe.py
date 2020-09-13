@@ -11,6 +11,7 @@ from datetime import datetime
 import json
 from random import randint
 from config import settings
+from PIL import Image
 
 
 router = APIRouter()
@@ -35,7 +36,7 @@ async def create_recipe(file: UploadFile = File(...), data: str = Form(...), req
     new_recipe.likes = 0
     new_recipe.dislikes = 0
     rid = randint(1111111111,9999999999)
-    file_extension= str(file.filename).split('.')[1]
+    file_extension= str(file.filename).rsplit('.')[-1] # get file ext
     to_save = f"{rid}.{file_extension}"
     new_recipe.image_path = f"{settings.UPLOAD_FOLDER}{to_save}"
     new_recipe.rid = rid
@@ -43,9 +44,19 @@ async def create_recipe(file: UploadFile = File(...), data: str = Form(...), req
     db.commit()
     upload_folder = settings.UPLOAD_FOLDER
     file_obj = file.file
-    upload_folder = open(os.path.join(upload_folder, to_save), 'wb+')
-    shutil.copyfileobj(file_obj, upload_folder)
-    upload_folder.close()
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
+    upload_file = os.path.join(upload_folder, to_save)
+
+    # shutil.copyfileobj(file_obj, upload_folder)
+    # upload_folder.close()
+
+    # resize image and save
+    output_size = (300, 300)
+    i = Image.open(file_obj)
+    i.thumbnail(output_size)
+    i.save(upload_file)
+
+
     return {"rid":rid}
     
 
